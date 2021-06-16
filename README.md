@@ -8,16 +8,22 @@
 
 
 $items = $args[0].split(";").Trim();
+
 #Setting variables
+
 $content = (Get-Content $PSScriptRoot/.env) 
 $newValues = New-Object PSObject
 $headers = @()
+
 #Getting headers from current content
+
 $content | ForEach-Object{
    $current=$_.split("=")
    $headers += $current[0]
 }
+
 #Getting new value for headers
+
 $items | ForEach-Object{
     $current=$_.split("=")    
     $exist = $headers -contains $current[0]
@@ -26,7 +32,9 @@ $items | ForEach-Object{
         $newValues | add-member Noteproperty $current[0] $current[1] 
      }
 }
+
 #Writing to env
+
 foreach ($x in $newValues | Get-Member) {
     if ($x.MemberType -eq "NoteProperty" -and $x.Name -notlike "__*") {              
         foreach($line in $content){
@@ -39,6 +47,7 @@ foreach ($x in $newValues | Get-Member) {
         }
     }
 }
+
 Set-Content $PSScriptRoot\.env -Value $content
 
 
