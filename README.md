@@ -5,6 +5,8 @@
 #This is particulary helpful for building multiple environments (dev, sit, uat, etc)
 
 ################## Start of Script ##################
+
+
 $items = $args[0].split(";").Trim();
 #Setting variables
 $content = (Get-Content $PSScriptRoot/.env) 
@@ -38,6 +40,8 @@ foreach ($x in $newValues | Get-Member) {
     }
 }
 Set-Content $PSScriptRoot\.env -Value $content
+
+
 ################## End of Script ##################
 
 **How to use**:
